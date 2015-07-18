@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-3">
+</div>
+<div class="col-md-6">
+<br><br>
+<h2>you searched for: <strong>{{ query }}</strong></h2>
+
+{% if results_count > 0 %}
+    <!--<p>found {{ results_count }} breweries</p><br>-->
+	<h2>Here are today's prices:</h2>
+	<br>
+    <table>
+		{% if known_price_breweries %}
+	        {% for Brewery in known_price_breweries %}
+		        <tr>	
+					<td style="text-align: right; padding-right: 25px;">
+						<p id="from">from</p><p style="text-align: right; margin-top: 25px; margin-bottom: 55px;"><span class="dollar">$</span><span class="results"><a href="../brewery/{{ Brewery.pk }}">{{ Brewery.price_today }}</a></span></p>	
+					</td>
+					<td id="brewery-details">
+						<h3><a href="../brewery/{{ Brewery.pk }}">{{ Brewery.brewery_name }}</a></h3>
+						<p><a href="../search/?q={{ Brewery.city }}">{{ Brewery.city }}, {{ Brewery.state }}</a></p>
+						<br>
+						<br>
+						<br>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+		{% if unknown_price_breweries %}
+			{% for Brewery in unknown_price_breweries %}
+				<tr>	
+					<td style="text-align: right; padding-right: 25px;">
+						<p class="other"><a href="../brewery/{{ Brewery.pk }}">?</a></p>
+					</td>
+					<td id="brewery-details">
+						<h3><a href="../brewery/{{ Brewery.pk }}">{{ Brewery.brewery_name }}</a></h3>
+						<p><a href="../search/?q={{ Brewery.city }}">{{ Brewery.city }}, {{ Brewery.state }}</a></p>
+						<br>
+						<br>
+						<br>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+		{% if closed_breweries %}
+			{% for Brewery in closed_breweries %}
+				<tr>	
+					<td style="text-align: right; padding-right: 25px;">
+						<p class="other"><a href="../brewery/{{ Brewery.pk }}">C</a></p>
+					</td>
+					<td id="brewery-details">
+						<h3><a href="../brewery/{{ Brewery.pk }}">{{ Brewery.brewery_name }}</a></h3>
+						<p><a href="../search/?q={{ Brewery.city }}">{{ Brewery.city }}, {{ Brewery.state }}</a></p>
+						<br>
+						<br>
+						<br>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+    </table>
+    <a href="" data-toggle="modal" data-target="#addBrewery">don't see a brewery? click here to add one</a>
+{% else %}
+    <p>No breweries matched your search criteria.</p>
+{% endif %}
+</div>
+{% endblock %}

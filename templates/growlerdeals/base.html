@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% block title %}{% endblock %}</title>
+		<meta name="description" content="A free HTML5/CSS3 template made exclusively for Codrops by Peter Finlan" />
+		<meta name="keywords" content="html5 template, css3, one page, animations, agency, portfolio, web design" />
+		<meta name="author" content="David Hoover and Kevin Ellenberger" />
+		<!-- Bootstrap -->
+		{% load staticfiles %}
+		<!-- favicon files -->
+		<link rel="apple-touch-icon" sizes="57x57" href="{% static 'growlerdeals/favicons/apple-icon-57x57.png' %}">
+		<link rel="apple-touch-icon" sizes="60x60" href="{% static 'growlerdeals/favicons/apple-icon-60x60.png' %}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{% static 'growlerdeals/favicons/apple-icon-72x72.png' %}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{% static 'growlerdeals/favicons/apple-icon-76x76.png' %}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{% static 'growlerdeals/favicons/apple-icon-114x114.png' %}">
+		<link rel="apple-touch-icon" sizes="120x120" href="{% static 'growlerdeals/favicons/apple-icon-120x120.png' %}">
+		<link rel="apple-touch-icon" sizes="144x144" href="{% static 'growlerdeals/favicons/apple-icon-144x144.png' %}">
+		<link rel="apple-touch-icon" sizes="152x152" href="{% static 'growlerdeals/favicons/apple-icon-152x152.png' %}">
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'growlerdeals/favicons/apple-icon-180x180.png' %}">
+		<link rel="icon" type="image/png" sizes="192x192"  href="{% static 'growlerdeals/favicons/android-icon-192x192.png' %}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'growlerdeals/favicons/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="96x96" href="{% static 'growlerdeals/favicons/favicon-96x96.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'growlerdeals/favicons/favicon-16x16.png' %}">
+		<link rel="manifest" href="{% static 'growlerdeals/favicons/manifest.json' %}">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="{% static 'growlerdeals/favicons/ms-icon-144x144.png' %}">
+		<meta name="theme-color" content="#ffffff">
+		<!-- general css and js-->
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#report-prices').click(function(){
+					$('#prices').slideToggle();
+				});
+				$('#new').click(function(){
+					if ($('#oldBrew').is(':hidden')){
+						$('#newBrew').slideToggle();
+					} else {
+						$('#newBrew').slideToggle();
+						$('#oldBrew').slideToggle();
+					}
+				});
+				$('#old').click(function(){
+					if ($('#newBrew').is(':hidden')){
+						$('#oldBrew').slideToggle();
+					} else {
+						$('#oldBrew').slideToggle();
+						$('#newBrew').slideToggle();
+					}
+				});
+				jQuery.validator.addClassRules("form-control", {
+					min: 1,
+					max: 25
+				});
+				$('#prices').validate({
+					errorClass:'has-error',
+					validClass:'has-success',
+					errorPlacement: function(error, element) {
+						error.appendTo( element.parent("div").next("div") );
+					},
+					highlight: function (input, errorClass, validClass){ 
+						$(input).closest("div")
+							.addClass(errorClass)
+							.removeClass(validClass); 
+					}, 
+					unhighlight: function (input, errorClass, validClass){
+						$(input).closest("div")
+							.removeClass(errorClass)
+							.addClass(validClass);
+					}
+				});
+				$('.closed').click(function(){
+					if (this.checked) {
+						$(this).closest(".form-group").find("input.form-control").val("0");
+						$(this).closest(".form-group").find("input.form-control").attr("disabled",true);
+						$(this).closest(".form-group").find("input.form-control").css("background-color","#adadad")
+					} else {
+						$(this).closest(".form-group").find("input.form-control").val("");
+						$(this).closest(".form-group").find("input.form-control").attr("disabled",false);
+						$(this).closest(".form-group").find("input.form-control").css("background-color","#fff")
+					}
+				})
+			});
+		</script>
+		{% block scripts %}{% endblock %}
+		<script src="{% static 'growlerdeals/boxify/js/modernizr.custom.js' %}"></script>
+		<link href="{% static 'growlerdeals/boxify/css/stylesheet.css' %}" rel="stylesheet">
+		<link href="{% static 'growlerdeals/boxify/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link href="{% static 'growlerdeals/boxify/css/jquery.fancybox.css' %}" rel="stylesheet">
+		<link href="{% static 'growlerdeals/boxify/css/flickity.css' %}" rel="stylesheet" >
+		<link href="{% static 'growlerdeals/boxify/css/animate.css' %}" rel="stylesheet">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+		<link href="{% static 'growlerdeals/boxify/css/styles.css' %}" rel="stylesheet">
+		<link href="{% static 'growlerdeals/boxify/css/queries.css' %}" rel="stylesheet">
+		<!-- Facebook and Twitter integration -->
+		<meta property="og:title" content=""/>
+		<meta property="og:image" content=""/>
+		<meta property="og:url" content=""/>
+		<meta property="og:site_name" content=""/>
+		<meta property="og:description" content=""/>
+		<meta name="twitter:title" content="" />
+		<meta name="twitter:image" content="" />
+		<meta name="twitter:url" content="" />
+		<meta name="twitter:card" content="" />
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+<div class="modal fade" id="addBrewery" tabindex="-1" role="dialog" aria-labelledby="addBreweryLabel">
+    <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="addBreweryLabel">Tell us about a brewery</h4>
+		    </div>
+		    <div class="modal-body">
+	            <!-- content goes here -->
+				<form class="form-horizontal" action="../addBrewery" method="post">
+				{% csrf_token %}
+	              	<div class="form-group">
+	              		<label for="brewery" class="col-sm-3 control-label">Brewery Name:</label>
+	              		<div class="col-sm-9">
+			                <input type="text" class="form-control" id="brewery" name="brewery" required>
+		                </div>
+	                </div>
+	                <div class="form-group">
+		            	<label for="website" class="col-sm-3 control-label">Website (optional):</label>
+		            	<div class="col-sm-9">
+			                <input type="text" class="form-control" id="website" name="website" maxlength="100">
+		                </div>
+		            </div>
+	             	<div class="form-group">
+	             		<label for="address" class="col-sm-3 control-label">Address:</label>
+	             		<div class="col-sm-9">				 
+			                <input type="text" class="form-control" id="address" name="address" required>
+		                </div>
+	              	</div>
+		            <div class="form-group">
+		            	<label for="city" class="col-sm-3 control-label">City:</label>
+		            	<div class="col-sm-9">				            	
+			                <input type="text" class="form-control" id="city" name="city" required>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		            	<label for="state" class="col-sm-3 control-label">State (abbreviation):</label>
+		            	<div class="col-sm-2">
+			                <input type="text" class="form-control" id="state" name="state" maxlength="2" required>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		            	<label for="zip_code" class="col-sm-3 control-label">Zip Code:</label>
+		            	<div class="col-sm-2">
+			                <input type="number" class="form-control" id="zip_code" name="zip_code" maxlength="9" required>
+		                </div>
+		            </div>
+			        <div class="modal-footer">
+			            <button type="submit" class="btn btn-primary">Submit</button>
+		        	</div>
+	            </form>		        
+		    </div>
+	    </div>
+    </div>
+</div>
+<div class="modal fade" id="addInfo" tabindex="-1" role="dialog" aria-labelledby="addInfoLabel">
+    <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="addBreweryLabel">What do you have to share?</h4>
+		    </div>
+		    <div class="modal-body">
+				<button type="button" class="btn btn-default btn-sm" id="new">Add a brewery</button><span style="padding-left: 20px; padding-right: 15px;">or</span>
+				<button type="button" class="btn btn-default btn-sm" id="old">Add to an existing brewery</button>
+			</div>
+			<div class="modal-body" id="newBrew" style="display: none;">
+		    	<div id="addBrewery">
+		    		<h2>Tell us about a brewery</h2>
+		            <!-- content goes here -->
+					<form class="form-horizontal" action="../addBrewery" method="Post">
+					{% csrf_token %}
+		              	<div class="form-group">
+		              		<label for="brewery" class="col-sm-3 control-label">Brewery Name:</label>
+		              		<div class="col-sm-9">
+				                <input type="text" class="form-control" id="brewery" name="brewery" required>
+			                </div>
+		                </div>
+		                <div class="form-group">
+			            	<label for="website" class="col-sm-3 control-label">Website (optional):</label>
+			            	<div class="col-sm-9">
+				                <input type="text" class="form-control" id="website" name="website" maxlength="100">
+			                </div>
+			            </div>
+		             	<div class="form-group">
+		             		<label for="address" class="col-sm-3 control-label">Address:</label>
+		             		<div class="col-sm-9">				 
+				                <input type="text" class="form-control" id="address" name="address" required>
+			                </div>
+		              	</div>
+			            <div class="form-group">
+			            	<label for="city" class="col-sm-3 control-label">City:</label>
+			            	<div class="col-sm-9">				            	
+				                <input type="text" class="form-control" id="city" name="city" required>
+			                </div>
+			            </div>
+			            <div class="form-group">
+			            	<label for="state" class="col-sm-3 control-label">State (abbreviation):</label>
+			            	<div class="col-sm-2">
+				                <input type="text" class="form-control" id="state" name="state" maxlength="2" required>
+			                </div>
+			            </div>
+			            <div class="form-group">
+			            	<label for="zip_code" class="col-sm-3 control-label">Zip Code:</label>
+			            	<div class="col-sm-3">
+				                <input type="number" class="form-control" id="zip_code" name="zip_code" maxlength="9" required>
+			                </div>
+			            </div>
+				        <div class="modal-footer">
+				            <button type="submit" class="btn btn-primary">Submit</button>
+			        	</div>
+		            </form>		  
+		        </div>
+			</div>
+			<div class="modal-body" id="oldBrew" style="display: none;">
+		        <div id="existingBrewery">
+		        <form class="form-horizontal" action="/search/" method="get">
+	    			<div class="form-group">
+	              		<label for="brewery" class="col-sm-4 control-label" id="infoSearch">Search for a Brewery</label>
+	              		<div class="col-sm-8">
+			                <input type="text" class="form-control" id="search" name="q" required>
+		                </div>
+					</div>
+				    <div class="modal-footer">
+				        <button type="submit" class="btn btn-primary">Search</button>
+			        </div>
+	    		</form>
+		        </div>     
+		    </div>
+	    </div>
+    </div>
+</div>
+
+		<!--[if lt IE 7]>
+		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+		<!-- open/close -->
+		<header>
+			<section class="hero">
+				<div class="container">
+					<div class="row nav-wrapper">
+						<div class="col-md-9 col-sm-9 col-xs-9 text-left" style="padding-left: 5px; padding-right: 0px;">
+							<a href="/#"><img src="{% static 'growlerdeals/img/logo-monochrome-1000px.png' %}" style="width60px;height:60px;"></a><span id="wordmark">growlerdeals<span style="color: #FFC300;">.beer</span></span> 
+						</div>
+						<div class="col-md-3 col-sm-3 col-xs-3 text-right navicon">
+							<a id="trigger-overlay" class="nav_slide_button nav-toggle" href="#"><span></span></a>
+						</div>
+					</div>
+					<div class="row hero-content">
+							{% block content %}{% endblock %}
+					</div>
+				</div>
+			</section>
+		</header>
+		<footer style="display: none;">
+			<div class="container" id="footer-container">
+				<div class="row">
+					<div class="col-md-5">
+						<p>© 2015 Developed by David Hoover and Kevin Ellenberger</p>
+					</div>
+					<div class="col-md-7">
+						<ul class="footer-nav">
+							<li><a href="/about/">about</a></li>
+							<li><a href="" data-toggle="modal" data-target="#addBrewery">add brewery</a></li>
+							<li><a href="/donate/">donate</a></li>
+							<li><a href="/forbreweries/">i'm a brewery</a></li>
+							<!--<li><a href="/contact/">contact us</a></li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div class="overlay overlay-boxify">
+			<nav>
+				<ul>
+					<li><a href="" data-toggle="modal" data-target="#addInfo"><i class="glyphicon glyphicon-plus"></i>add info</a></li>
+					<li><a href="/about/"><i class="glyphicon glyphicon-tint"></i>about</a></li>
+				</ul>
+				<ul>
+					<li><a href="/donate/"><i class="glyphicon glyphicon-globe"></i>contribute</a></li>
+					<li><a href="/forbreweries/"><i class="glyphicon glyphicon-user"></i>i'm a brewery</a></li>
+				</ul>
+			</nav>
+		</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        		<h4 class="modal-title" id="myModalLabel">Report {{ brewery.brewery_name }}'s growler prices</h4>
+      		</div>
+	      	<div class="modal-body">
+				<form class="form-horizontal" id="prices-form" role="form" action="" method="post">
+					{% csrf_token %}
+					{% for field in form %}
+				  		<div class="form-group">
+				    		<label class="control-label col-sm-2" id="price" name="{{ field.name }}"for="{{ field.name }}">{{ field.label }}</label>
+				    		<div class="col-sm-10"> 
+				      			<input type="number" min="0" max="100" class="form-control" required=true>
+				    		</div>
+				 		</div>
+					{% endfor %}
+					<input type="submit" value="Submit"/>
+				</form>
+				<p>{{ message }}</p>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        	<button type="button" class="btn btn-primary">Save changes</button>
+	      	</div>
+    	</div>
+  	</div>
+</div>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{% static 'growlerdeals/boxify/js/min/toucheffects-min.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="{% static 'growlerdeals/boxify/js/flickity.pkgd.min.js' %}"></script>
+		<script src="{% static 'growlerdeals/boxify/js/jquery.fancybox.pack.js' %}"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="{% static 'growlerdeals/boxify/js/retina.js' %}"></script>
+		<script src="{% static 'growlerdeals/boxify/js/waypoints.min.js' %}"></script>
+		<script src="{% static 'growlerdeals/boxify/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'growlerdeals/boxify/js/min/scripts-min.js' %}"></script>
+		
+		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+		<!--
+		<script>
+		(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+		function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+		e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+		e.src='//www.google-analytics.com/analytics.js';
+		r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+		ga('create','UA-XXXXX-X');ga('send','pageview');
+		</script>
+		-->
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Growler Deals{% endblock %}
+{% block content %}
+<div class="col-md-12">
+{% load staticfiles %}
+<link href="{% static 'growlerdeals/boxify/js/search_bar/set1.css' %}" rel="stylesheet" >
+<style type="text/css">
+#main-search {
+	background-color: transparent;
+  	border: transparent;
+}
+	
+</style>
+<script src="{% static 'growlerdeals/boxify/js/search_bar/search.js' %}"></script>
+
+
+</style>
+<h1 class="animated fadeInDown">{{ header_line_1 }}</h1>
+<h1 class="animated fadeInDown" style="margin-top: -35px">{{ header_line_2 }}</h1>
+
+    <form action="/search/" method="get">
+        <span class="input input--hoshi">
+		<input class="input__field input__field--hoshi" type="text" id="input-4" autocomplete="off" name="q" />
+			<label class="input__label input__label--hoshi input__label--hoshi-color" for="input-4">
+				<span class="input__label-content input__label-content--hoshi">search by city or brewery name</span>	
+			</label>	
+		</span>
+            <button type="submit" id="main-search">
+            	<span class="glyphicon glyphicon-search" style="font-size: 25px;margin-top:50px;"></span>
+            </button> 
+    </form>
+    {% if error %}
+		<p style="color: red;">Yo, you gotta search something!</p>
+	{% endif %}
+		<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+</div>
+{% endblock %}

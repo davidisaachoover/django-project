@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+{% if message %}
+<h3>{{ message }}</h3>
+<a href="{{ return_url }}">click here to return</a>
+{% else %}
+<h3>oops, did you get here by mistake?</h3>
+Thanks, we'll get back to you as soon as possible. Cheers
+{% endif %}
+{% endblock %}

@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+{% block title %}{{ brewery.brewery_name }} growlers{% endblock %}
+{% block content %}
+<div class="col-md-3">
+</div>
+<div class="col-md-6">
+{% if brewery %}
+    <style type="text/css">
+    #myModal > div {
+        color: black;
+    }
+	</style>
+    <br>
+    <h2>{{ brewery.brewery_name }}</h2>
+    <p>{{ brewery.address_line1 }}<br></p>
+    {{ brewery.city }}, {{ brewery.state }} {{ brewery.zip_code }}</p>
+    {% if brewery.website %}
+        <a href="//{{ brewery.website }}">{{ brewery.website }}</a>
+    {% endif %}
+    {% if brewery.notes %}
+        <p>Notes:  {{ brewery.notes }}</p>
+    {% endif %}
+    <br>
+    <row>
+        {% if prices %}
+            <p id="shrink">Here are the prices users have reported:</p>
+            {% for price_set in prices %}
+				<table id="price-horizontal">
+					<tr>
+						<th class="hdays">sun</th>
+						<th class="hdays">mon</th>
+						<th class="hdays">tue</th>
+						<th class="hdays">wed</th>
+						<th class="hdays">thu</th>
+						<th class="hdays">fri</th>
+						<th class="hdays">sat</th>
+					</tr>
+					<tr>
+						<td>
+							{% if price_set.Sunday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Sunday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Monday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Monday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Tuesday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Tuesday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Wednesday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Wednesday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Thursday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Thursday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Friday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Friday }}</p>
+							{% endif %}
+						</td>
+						<td>
+							{% if price_set.Saturday == '0' %}
+							<p class="hclosed">closed</p>
+							{% else %}
+							<p class="hprice">${{ price_set.Saturday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+				</table>
+				<table id="price-vertical">
+					<tr>
+						<td class="vdays">sun:</td>
+						<td>
+							{% if price_set.Sunday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Sunday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">mon:</td>
+						<td>
+							{% if price_set.Monday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Monday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">tue:</td>
+						<td>
+							{% if price_set.Tuesday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Tuesday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">wed:</td>
+						<td>
+							{% if price_set.Wednesday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Wednesday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">thu:</td>
+						<td>
+							{% if price_set.Thursday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Thursday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">fri:</td>
+						<td>
+							{% if price_set.Friday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Friday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="vdays">sat:</td>
+						<td>
+							{% if price_set.Saturday == '0' %}
+							<p class="vclosed">closed</p>
+							{% else %}
+							<p class="vprice">${{ price_set.Saturday }}</p>
+							{% endif %}
+						</td>
+					</tr>
+				</table>
+            {% endfor %}
+           <a href="" data-toggle="modal" data-target="#somethingWrong">something look wrong? &#9888;</a>
+        {% else %}
+            <h4>You can be the first to submit a price for {{ brewery.brewery_name }}.</h4>
+        {% endif %}
+    </row><br>
+    <row>
+	<h2><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="" id="report-prices">Report growler prices</button></h2><br>
+        <h2><form name="" style="display: none;" id="prices" class="form-horizontal" role="form" action="" method="POST">
+            {% csrf_token %}
+
+            
+            <div class="form-group">
+                <label for="input-Sunday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Sunday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="priceSunday" name="Sunday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id="closedSunday"><label style="padding-left: 10px;">Closed</label></div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-Monday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Monday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Monday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <label for="input-Tuesday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Tuesday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Tuesday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <label for="input-Wednesday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Wednesday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Wednesday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <label for="input-Thursday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Thursday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Thursday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <label for="input-Friday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Friday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Friday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <label for="input-Saturday" class="col-sm-4 col-xs-6" style="padding-top: 5px;">Saturday</label>
+                <div class="input-group col-sm-3" style="margin-right: 10px;">
+                    <div class="input-group-addon">$</div><input type="number" step=".01" class="form-control" id="" name="Saturday">
+                </div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: 10px; font-size: 15px;"></div>
+				<div class="col-sm-offset-4 col-xs-offset-6" style="padding-top: -10px; font-size: 15px;"><input type="checkbox" class="closed" id=""><label style="padding-left: 10px;">Closed</label></div>
+			</div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-xs-offset-6">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+
+        </form></h2>
+    </row>
+</div>
+<div class="modal fade" id="somethingWrong" tabindex="-1" role="dialog" aria-labelledby="somethingWrongLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="somethingWrongLabel" style="color: black;">Let us know if something's wrong</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" action="../../somethingwrong/" method="post">
+            {% csrf_token %}
+            <br style="clear:both">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" name="email" placeholder=" Email (optional)">
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" type="textarea" id="source" name="source" placeholder="Source (optional): if you are a brewery let us know here and we will be in contact. If you aren't, please put in somekind of source showing that what our users have submitted is not accurate." maxlength="140" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                <textarea class="form-control" type="textarea" id="message" placeholder="What's wrong?" maxlength="140" name="message" rows="7"></textarea>
+                    <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                 
+                </div>
+                <input type="hidden" name="brewery" value="{{ brewery.brewery_name }}">
+                <div class="modal-footer">
+        			<button type="submit" class="btn btn-default ">Submit</button>
+      			</div>   
+            </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(document).ready(function(){ 
+    $('#characterLeft').text('140 characters left');
+    $('#message').keydown(function () {
+        var max = 140;
+        var len = $(this).val().length;
+        if (len >= max) {
+            $('#characterLeft').text('You have reached the limit');
+            $('#characterLeft').addClass('red');
+            $('#btnSubmit').addClass('disabled');            
+        } 
+        else {
+            var ch = max - len;
+            $('#characterLeft').text(ch + ' characters left');
+            $('#btnSubmit').removeClass('disabled');
+            $('#characterLeft').removeClass('red');            
+        }
+    });    
+});
+</script>
+{% else %}
+    <p>No brewery matched your search criteria.</p>
+{% endif %}
+</div>
+{% endblock %}
